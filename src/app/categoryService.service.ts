@@ -19,11 +19,11 @@ export class CategoryServiceService {
   add(category: CategoryWord) {
     let nextId = this.getNextId();
 
-  
+
     category.id = nextId;
     localStorage.setItem(category.id.toString(), JSON.stringify(category));
 
- 
+
     nextId++;
     localStorage.setItem("nextId", nextId.toString())
   }
@@ -59,7 +59,7 @@ export class CategoryServiceService {
     throw new Error("get() id " + id.toString() + " not found in localStorage");
   }
 
-  list() : CategoryWord[] {
+  list(): CategoryWord[] {
     let result = [];
     let lastValidNumber = this.getNextId();
 

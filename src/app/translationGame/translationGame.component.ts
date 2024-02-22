@@ -1,7 +1,7 @@
 import { CommonModule, NgFor } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CategoryWord } from '../shared/categoryWord';
-import { GameWords } from '../shared/gameWords';
+import { TranslationWord } from '../shared/translationWord';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -16,9 +16,6 @@ import { CategoryServiceService } from '../categoryService.service';
 import { ActivatedRoute } from '@angular/router';
 
 
-
-
-
 @Component({
   selector: 'app-translation-game',
   standalone: true,
@@ -30,39 +27,45 @@ import { ActivatedRoute } from '@angular/router';
 })
 
 export class TranslationGameComponent implements OnInit {
-  CategoryWord!: CategoryWord;
-  gameWords: GameWords[] = [];
-  displayedColumns: string[] = ["origin-col", "userinput-col", "is-corect-col"];
-  isCheckedButtonWasClicked: boolean = false;
+  category!: CategoryWord;
+  trasnlationWords: TranslationWord[] = [];
+  displayedColumns: string[] = ["origin-col", "translation-col", "is-right-col"];
+  isClicked: boolean = false;
   checkMessage: string = "";
   isShowTranslation: boolean = false;
 
-  constructor(private cs: CategoryServiceService, private activatedRoute: ActivatedRoute) {
+  constructor(private categoryServiceService: CategoryServiceService,
+    private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit(): void {
     let id = this.activatedRoute.snapshot.paramMap.get("id");
     if (id != null) {
-      this.CategoryWord = this.cs.get(parseInt(id));
+      this.category = this.categoryServiceService.get(parseInt(id));
 
-      this.CategoryWord.words.forEach(translatedWord => {
-        this.gameWords.push(new GameWords(translatedWord.origin, translatedWord.target));
-      });
+      for (let index = 0; index < this.category.words.length; index++) {
+        const wordToTranslate = this.category.words[index];
+        this.trasnlationWords.push(new TranslationWord(wordToTranslate.origin, wordToTranslate.target, "", false));
+      }
     };
   }
 
-
   Check() {
-    this.isCheckedButtonWasClicked = true;
+    this.isClicked = true;
 
-    let correctGuess = 0;
+    let rightGuess = 0;
+    for (let index = 0; index < this.trasnlationWords.length; index++) {
+      const singleWord = this.trasnlationWords[index];
+      singleWord.isRight = singleWord.guess == singleWord.target;
+      if (singleWord.isRight){
+        rightGuess++;
+      }
+    }
 
-
-
-    if (correctGuess == this.gameWords.length) {
+    if (rightGuess == this.trasnlationWords.length) {
       this.checkMessage = "Well done, You finished!!!";
     } else {
-      this.checkMessage = `You have translated ${correctGuess} out of ${this.gameWords.length} words correctly, try again`;
+      this.checkMessage = `You have translated ${rightGuess} out of ${this.trasnlationWords.length} words correctly, try again`;
     }
   }
 }
