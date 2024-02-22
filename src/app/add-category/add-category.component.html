@@ -1,0 +1,63 @@
+<form class="container" #myForm="ngForm">
+    <div>
+    <label class="title">Category Name: </label>
+    <mat-form-field>
+    <input matInput [(ngModel)]="categoryToEdit.name" name="categoryName" maxlength="50" minlength="1" 
+    placeholder="Enter category name" 
+    required pattern="^[A-Za-z]+$" #categoryName="ngModel" >
+    <mat-error *ngIf="categoryName.invalid"> category must be in english</mat-error>
+    </mat-form-field>
+    </div>
+    <div>
+    <label for="sourceLang" class="title">Original Language:</label>
+    <mat-form-field>
+    <input matInput [(ngModel)]="categoryToEdit.origin_lang" name="originLang" maxlength="50" minlength="1" 
+    English required disabled="true">
+    </mat-form-field>
+    </div>
+    <div>
+    <span for="targetLang" class="title">Translating Language:</span>
+    <mat-form-field>
+    <input matInput [(ngModel)]="categoryToEdit.target_lang" name="targetLang" maxlength="50" minlength="1" required disabled="true">
+    </mat-form-field>
+    </div>
+    <table>
+    <thead>
+    <tr>
+    <th>Original</th>
+    <th>Destination</th>
+    <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container *ngFor="let word of categoryToEdit.words">
+    <tr>
+    <td>
+    <mat-form-field class="table">
+    <input matInput [(ngModel)]="word.origin" name="origin{{word.origin}}" maxlength="50" minlength="1"  
+    pattern="^[A-Za-z]+$" #originWord="ngModel" placeholder="English word">
+    <mat-error *ngIf="originWord.invalid">Word must be in English letters only</mat-error>
+    </mat-form-field>
+    </td>
+    <td>
+    <mat-form-field class="table">
+    <input matInput [(ngModel)]="word.target" name="target{{word.target}}" maxlength="50" minlength="1" 
+     pattern="^[א-ת]+$" #targetWord="ngModel" placeholder="Hebrew word">
+    <mat-error *ngIf="targetWord.invalid">Word must be in Hebrew letters only</mat-error>
+    </mat-form-field>
+    </td>
+    <td>
+    <button class="table" (click)="deleteItem(word)" mat-button>
+    <mat-icon>delete</mat-icon>
+    </button>
+     </td>
+    </tr>
+    </ng-container>
+    </tbody>
+    </table>
+    <button class="addButton" (click)="AddNewWord()" mat-raised-button>+ Add new word</button>
+    <button class="saveButton" type="submit" mat-raised-button color="primary" (click)="save()"
+     [disabled]="myForm.invalid || categoryToEdit.words.length == 0">Save</button>
+</form>
+
+

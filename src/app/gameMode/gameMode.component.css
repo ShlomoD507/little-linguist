@@ -1,0 +1,15 @@
+.header{
+text-align: center;
+padding: 20px;
+}
+
+.form{
+    margin: 50px;
+    justify-content: center;
+}
+
+.button{
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}

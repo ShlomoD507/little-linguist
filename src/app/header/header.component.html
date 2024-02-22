@@ -1,0 +1,19 @@
+<mat-toolbar color="primary">
+  <button mat-button [matMenuTriggerFor]="menu">
+      <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item [routerLink]="'/gameMode'">Game mode</button>
+    <button mat-menu-item [routerLink]="'/managementMode'">management mode</button>
+  </mat-menu>
+
+  <span class="icons"></span>
+  <h1 class="header-title">Little Linguist</h1>
+  <span class="icons"></span>
+  
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+      <mat-icon>person</mat-icon>
+  </button> 
+</mat-toolbar>
+
+

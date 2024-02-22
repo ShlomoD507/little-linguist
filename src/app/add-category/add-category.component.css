@@ -1,0 +1,27 @@
+.container {
+  margin: 15px;
+}
+
+.title{
+  display: inline-block;
+  min-width: 130px;
+  text-align: center;
+}
+
+.addButton{
+  margin: 20px auto;
+  display: block; 
+}
+
+.saveButton{
+  margin: 20px auto;
+  display: block; 
+}
+
+  table,
+  .table{
+    margin: 0 auto;
+    text-align: center;
+
+    justify-content: space-evenly;
+  }

@@ -1,0 +1,12 @@
+<H1 class="header">Let's Play</H1>
+<H1 class="header">Choose Category</H1>
+<mat-form-field class="form">
+  <mat-label>Select an option</mat-label>
+  <mat-select  #selectedcategoryWords matNativeControl>
+    <mat-option *ngFor="let Categoryw of CategoryWords" value="{{Categoryw.id}}">{{Categoryw.name}}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<div class="button">
+  <button mat-raised-button color="primary" (click)="onPlayButton(selectedcategoryWords.value)">Play</button>
+</div>
